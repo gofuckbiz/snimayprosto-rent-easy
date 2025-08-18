@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Search, Heart, User, Menu } from "lucide-react";
+import { useState } from "react";
+import AuthForm from "./AuthForm";
 
 const Header = () => {
+  const [isAuthFormOpen, setIsAuthFormOpen] = useState(false);
+
   return (
-    <header className="bg-background/95 backdrop-blur-md border-b border-border sticky top-0 z-50 animate-fade-in">
+    <>
+      <header className="bg-background/95 backdrop-blur-md border-b border-border sticky top-0 z-50 animate-fade-in">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-8">
           <div className="text-2xl font-bold text-foreground hover:scale-105 transition-spring cursor-pointer">
@@ -38,7 +43,12 @@ const Header = () => {
             Избранное
           </Button>
           
-          <Button variant="outline" size="sm" className="hover:scale-105 transition-spring hover:shadow-subtle">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="hover:scale-105 transition-spring hover:shadow-subtle"
+            onClick={() => setIsAuthFormOpen(true)}
+          >
             <User className="h-4 w-4 mr-2" />
             Войти
           </Button>
@@ -52,7 +62,13 @@ const Header = () => {
           </Button>
         </div>
       </div>
-    </header>
+      </header>
+      
+      <AuthForm 
+        isOpen={isAuthFormOpen} 
+        onClose={() => setIsAuthFormOpen(false)} 
+      />
+    </>
   );
 };
 
