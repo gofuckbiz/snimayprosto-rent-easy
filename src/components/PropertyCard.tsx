@@ -27,13 +27,13 @@ const PropertyCard = ({
   isFavorite = false 
 }: PropertyCardProps) => {
   return (
-    <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-elegant transition-all duration-300 cursor-pointer border border-border/50">
+    <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-elegant transition-spring cursor-pointer border border-border/50 hover:scale-105 animate-fade-in">
       {/* Image */}
       <div className="relative overflow-hidden">
         <img 
           src={imageUrl} 
           alt={title}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-48 object-cover group-hover:scale-110 transition-spring duration-500"
         />
         
         {/* Badges */}
@@ -49,18 +49,18 @@ const PropertyCard = ({
         <Button
           variant="ghost"
           size="sm"
-          className={`absolute top-3 right-3 w-8 h-8 p-0 bg-white/80 hover:bg-white ${
+          className={`absolute top-3 right-3 w-8 h-8 p-0 bg-white/90 hover:bg-white hover:scale-110 transition-spring ${
             isFavorite ? 'text-red-500' : 'text-muted-foreground'
           }`}
         >
-          <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+          <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current animate-scale-in' : ''}`} />
         </Button>
       </div>
 
       {/* Content */}
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+          <h3 className="font-semibold text-foreground group-hover:text-primary transition-spring line-clamp-2">
             {title}
           </h3>
         </div>
@@ -95,7 +95,7 @@ const PropertyCard = ({
             <span className="text-muted-foreground text-sm">/месяц</span>
           </div>
           
-          <Button variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground">
+          <Button variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-spring">
             Подробнее
           </Button>
         </div>

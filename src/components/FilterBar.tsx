@@ -11,7 +11,7 @@ const FilterBar = () => {
   ];
 
   return (
-    <div className="bg-background border-b border-border sticky top-16 z-40 py-4">
+    <div className="bg-background/95 backdrop-blur-md border-b border-border sticky top-16 z-40 py-4 animate-fade-in">
       <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           {/* Filters */}
@@ -52,7 +52,7 @@ const FilterBar = () => {
               </SelectContent>
             </Select>
 
-            <Button variant="outline" className="hover:bg-primary hover:text-primary-foreground">
+            <Button variant="outline" className="hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-spring">
               <SlidersHorizontal className="h-4 w-4 mr-2" />
               Все фильтры
             </Button>
@@ -77,14 +77,14 @@ const FilterBar = () => {
           <div className="flex flex-wrap gap-2 items-center mt-4">
             <span className="text-sm text-muted-foreground">Активные фильтры:</span>
             {activeFilters.map((filter, index) => (
-              <Badge key={index} variant="secondary" className="pl-3 pr-1 py-1">
+              <Badge key={index} variant="secondary" className="pl-3 pr-1 py-1 hover:scale-105 transition-spring">
                 {filter}
-                <Button variant="ghost" size="sm" className="ml-1 h-4 w-4 p-0 hover:bg-transparent">
+                <Button variant="ghost" size="sm" className="ml-1 h-4 w-4 p-0 hover:bg-transparent hover:scale-110 transition-spring">
                   <X className="h-3 w-3" />
                 </Button>
               </Badge>
             ))}
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground hover:scale-105 transition-spring">
               Очистить все
             </Button>
           </div>

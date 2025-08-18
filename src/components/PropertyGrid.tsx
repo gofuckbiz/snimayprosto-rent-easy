@@ -82,7 +82,7 @@ const PropertyGrid = () => {
 
   return (
     <section className="py-12 bg-background">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 animate-fade-in">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-3xl font-bold mb-2">Рекомендуемые квартиры</h2>
@@ -99,7 +99,7 @@ const PropertyGrid = () => {
         </div>
 
         <div className="text-center mt-12">
-          <button className="bg-gradient-primary text-primary-foreground px-8 py-3 rounded-lg font-medium hover:shadow-elegant transition-all duration-300">
+          <button className="bg-gradient-primary text-primary-foreground px-8 py-3 rounded-lg font-medium hover:shadow-elegant hover:scale-105 transition-spring animate-float">
             Показать ещё квартиры
           </button>
         </div>

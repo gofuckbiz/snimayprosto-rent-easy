@@ -25,8 +25,8 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-gradient-elegant">
+      <div className="container mx-auto px-4 animate-fade-in">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">Почему выбирают СнятьПросто?</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -38,11 +38,11 @@ const FeaturesSection = () => {
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-elegant transition-all duration-300">
+              <div key={index} className="text-center group animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-elegant group-hover:scale-110 transition-spring">
                   <Icon className="h-8 w-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-spring">{feature.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
               </div>
             );
