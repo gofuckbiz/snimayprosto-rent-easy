@@ -7,22 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { 
-  X, 
-  Upload, 
-  MapPin, 
-  Home, 
-  Bed, 
-  Ruble, 
-  Phone, 
-  Mail, 
-  Star,
-  Eye,
-  Save,
-  Image as ImageIcon,
-  Trash2,
-  Plus
-} from "lucide-react";
+import { X, Upload, MapPin, Home, Bed, RussianRuble as Ruble, Phone, Mail, Star, Eye, Save, Image as ImageIcon, Trash2, Plus } from "lucide-react";
 
 interface CreateListingFormProps {
   isOpen: boolean;
