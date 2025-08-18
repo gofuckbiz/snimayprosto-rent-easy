@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Search, Heart, User, Menu } from "lucide-react";
 import { useState } from "react";
 import AuthForm from "./AuthForm";
+import CreateListingForm from "./CreateListingForm";
 
 const Header = () => {
   const [isAuthFormOpen, setIsAuthFormOpen] = useState(false);
+  const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
 
   return (
     <>
@@ -53,7 +55,12 @@ const Header = () => {
             Войти
           </Button>
           
-          <Button variant="default" size="sm" className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring">
+          <Button 
+            variant="default" 
+            size="sm" 
+            className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring"
+            onClick={() => setIsCreateListingOpen(true)}
+          >
             Разместить объявление
           </Button>
 
@@ -67,6 +74,11 @@ const Header = () => {
       <AuthForm 
         isOpen={isAuthFormOpen} 
         onClose={() => setIsAuthFormOpen(false)} 
+      />
+      
+      <CreateListingForm 
+        isOpen={isCreateListingOpen} 
+        onClose={() => setIsCreateListingOpen(false)} 
       />
     </>
   );
