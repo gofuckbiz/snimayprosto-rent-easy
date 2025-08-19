@@ -1,6 +1,6 @@
 import { authService } from './auth-service';
 
-const API_URL = (import.meta as any)?.env?.VITE_API_URL || "http://localhost:8080";
+const API_URL = (import.meta as any)?.env?.VITE_API_URL || "https://localhost:8080";
 export const BACKEND_URL = API_URL;
 
 type Json = Record<string, unknown>;
@@ -64,8 +64,20 @@ async function request(path: string, options: RequestInit = {}) {
     ...options,
   });
   
-  const isJson = res.headers.get('content-type')?.includes('application/json');
-  const data = isJson ? await res.json() : undefined;
+  // Always attempt to parse JSON for successful responses
+  let data;
+  if (res.ok) {
+    try {
+      data = await res.json();
+    } catch (e) {
+      // If JSON parsing fails, set data to empty object
+      data = {};
+    }
+  } else {
+    // For error responses, try to parse JSON but fallback to undefined
+    const isJson = res.headers.get('content-type')?.includes('application/json');
+    data = isJson ? await res.json() : undefined;
+  }
   
   if (!res.ok) {
     // Handle 401 errors with automatic token refresh
