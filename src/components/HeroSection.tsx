@@ -32,7 +32,6 @@ const HeroSection = () => {
           backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
           backgroundSize: '40px 40px'
         }}></div>
-        </div>
       </div>
 
       {/* Content */}
