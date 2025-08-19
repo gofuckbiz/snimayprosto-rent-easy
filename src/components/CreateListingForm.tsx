@@ -8,6 +8,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { X, Upload, MapPin, Home, Bed, RussianRuble as Ruble, Phone, Mail, Star, Eye, Save, Image as ImageIcon, Trash2, Plus } from "lucide-react";
+import { createProperty, uploadPropertyImages } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/lib/auth-context";
+import MapComponent from "./MapComponent";
 
 interface CreateListingFormProps {
   isOpen: boolean;
@@ -27,6 +31,8 @@ interface FormData {
   amenities: string[];
   isUrgent: boolean;
   visibility: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface Photo {
@@ -50,10 +56,15 @@ const CreateListingForm = ({ isOpen, onClose }: CreateListingFormProps) => {
     email: "",
     amenities: [],
     isUrgent: false,
-    visibility: "public"
+    visibility: "public",
+    latitude: 0,
+    longitude: 0
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
+  const { user } = useAuth();
 
   const amenitiesList = [
     "Балкон", "Мебель", "Холодильник", "Стиральная машина", 
@@ -76,10 +87,22 @@ const CreateListingForm = ({ isOpen, onClose }: CreateListingFormProps) => {
     { value: "5+", label: "5+ комнат" }
   ];
 
-  const handleInputChange = (field: keyof FormData, value: string | boolean | string[]) => {
+  const handleInputChange = (field: keyof FormData, value: string | boolean | string[] | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const handleLocationSelect = (lat: number, lng: number, address: string) => {
+    setFormData(prev => ({
+      ...prev,
+      latitude: lat,
+      longitude: lng,
+      address: address
+    }));
+    if (errors.address) {
+      setErrors(prev => ({ ...prev, address: "" }));
     }
   };
 
@@ -131,6 +154,7 @@ const CreateListingForm = ({ isOpen, onClose }: CreateListingFormProps) => {
     if (!formData.propertyType) newErrors.propertyType = "Выберите тип недвижимости";
     if (!formData.rooms) newErrors.rooms = "Укажите количество комнат";
     if (!formData.price || parseFloat(formData.price) <= 0) newErrors.price = "Укажите корректную цену";
+    if (!formData.latitude || !formData.longitude) newErrors.address = "Укажите точное местоположение на карте";
     if (!formData.phone.trim()) newErrors.phone = "Телефон обязателен";
     if (photos.length === 0) newErrors.photos = "Добавьте хотя бы одну фотографию";
 
@@ -152,14 +176,59 @@ const CreateListingForm = ({ isOpen, onClose }: CreateListingFormProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    if (!validateForm()) return;
-    
-    // Here you would submit the form data
-    console.log("Form submitted:", formData, photos);
-    
-    // Show success notification and close
-    onClose();
+  const handleSubmit = async () => {
+    if (!user) {
+      toast({ title: "Требуется вход", description: "Войдите, чтобы создать объявление", variant: "destructive" });
+      return;
+    }
+    if (!validateForm()) {
+      // move user to first step containing error
+      if (!formData.title || !formData.propertyType || !formData.rooms || !formData.price) {
+        setCurrentStep(1);
+      } else if (photos.length === 0 || !formData.address) {
+        setCurrentStep(2);
+      } else {
+        setCurrentStep(3);
+      }
+      toast({ title: "Проверьте форму", description: "Заполните обязательные поля и добавьте фото", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    try {
+      // Step 1: Create property
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        address: formData.address,
+        propertyType: formData.propertyType,
+        rooms: formData.rooms,
+        price: formData.price,
+        priceType: formData.priceType,
+        phone: formData.phone,
+        email: formData.email,
+        amenities: formData.amenities,
+        isUrgent: formData.isUrgent,
+        visibility: formData.visibility,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+      };
+      
+      const property = await createProperty(payload);
+      
+      // Step 2: Upload images if any
+      if (photos.length > 0) {
+        const imageFiles = photos.map(p => p.file);
+        await uploadPropertyImages(property.id, imageFiles);
+      }
+      
+      toast({ title: "Объявление создано", description: "Ваше объявление опубликовано с фотографиями." });
+      onClose();
+    } catch (err: any) {
+      const message = err?.status === 401 ? "Требуется вход" : (err?.message || "Не удалось создать объявление");
+      toast({ title: "Ошибка", description: message, variant: "destructive" });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handlePreview = () => {
@@ -394,14 +463,13 @@ const CreateListingForm = ({ isOpen, onClose }: CreateListingFormProps) => {
                 {errors.address && <p className="text-sm text-destructive">{errors.address}</p>}
               </div>
 
-              {/* Map Placeholder */}
-              <div className="h-64 bg-muted rounded-lg flex items-center justify-center border border-border">
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-muted-foreground">Интерактивная карта</p>
-                  <p className="text-sm text-muted-foreground">Укажите точное местоположение</p>
-                </div>
-              </div>
+              {/* Interactive Map */}
+              <MapComponent
+                onLocationSelect={handleLocationSelect}
+                initialAddress={formData.address}
+                initialLat={formData.latitude || undefined}
+                initialLng={formData.longitude || undefined}
+              />
             </div>
           )}
 
@@ -552,10 +620,11 @@ const CreateListingForm = ({ isOpen, onClose }: CreateListingFormProps) => {
               ) : (
                 <Button
                   onClick={handleSubmit}
-                  className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring"
+                  className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring disabled:opacity-60"
+                  disabled={submitting}
                 >
                   <Save className="h-4 w-4 mr-2" />
-                  Опубликовать
+                  {submitting ? "Публикуем..." : "Опубликовать"}
                 </Button>
               )}
             </div>

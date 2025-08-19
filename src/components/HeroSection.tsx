@@ -1,10 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin } from "lucide-react";
+import { Search, MapPin, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getStats } from "@/lib/api";
 import heroImage from "@/assets/hero-apartment.jpg";
 
 const HeroSection = () => {
+  const { data: stats } = useQuery({
+    queryKey: ['stats'],
+    queryFn: getStats,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+
   return (
     <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-gradient-hero">
       {/* Animated background pattern */}
@@ -72,8 +81,20 @@ const HeroSection = () => {
           </div>
           
           <div className="text-foreground/70 text-sm">
-            Найдено более <span className="font-semibold text-foreground">10,000</span> объявлений
+            Найдено более <span className="font-semibold text-foreground">
+              {stats?.properties ? stats.properties.toLocaleString() : "10,000"}
+            </span> объявлений
           </div>
+        </div>
+        
+        {/* Learn more button */}
+        <div className="mt-8 animate-fade-in animation-delay-400">
+          <Button variant="outline" size="lg" asChild className="border-white/30 text-white hover:bg-white hover:text-foreground transition-spring">
+            <Link to="/how-it-works">
+              Узнать, как это работает
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

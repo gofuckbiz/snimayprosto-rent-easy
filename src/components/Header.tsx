@@ -1,12 +1,24 @@
 import { Button } from "@/components/ui/button";
-import { Search, Heart, User, Menu } from "lucide-react";
+import { Search, Heart, User, Menu, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import AuthForm from "./AuthForm";
 import CreateListingForm from "./CreateListingForm";
+import MessagesModal from "./MessagesModal";
+import { useAuth } from "@/lib/auth-context";
+import ProfileWidget from "./ProfileWidget";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isAuthFormOpen, setIsAuthFormOpen] = useState(false);
   const [isCreateListingOpen, setIsCreateListingOpen] = useState(false);
+  const [isMessagesOpen, setIsMessagesOpen] = useState(false);
+
+  const { user, loading } = useAuth();
+
+  // Debug logging
+  console.log("Header - User:", user);
+  console.log("Header - User role:", user?.role);
+  console.log("Header - Should show landlord button:", user && user.role === 'landlord');
 
   return (
     <>
@@ -18,24 +30,24 @@ const Header = () => {
           </div>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#" className="text-foreground hover:text-primary transition-spring relative group">
+            <Link to="/properties" className="text-foreground hover:text-primary transition-spring relative group">
               <span className="relative">
                 Квартиры
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </span>
-            </a>
+            </Link>
             <a href="#" className="text-foreground hover:text-primary transition-spring relative group">
               <span className="relative">
                 Комнаты
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </span>
             </a>
-            <a href="#" className="text-foreground hover:text-primary transition-spring relative group">
+            <Link to="/how-it-works" className="text-foreground hover:text-primary transition-spring relative group">
               <span className="relative">
                 Как это работает
                 <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </span>
-            </a>
+            </Link>
           </nav>
         </div>
 
@@ -45,24 +57,46 @@ const Header = () => {
             Избранное
           </Button>
           
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="hover:scale-105 transition-spring hover:shadow-subtle"
-            onClick={() => setIsAuthFormOpen(true)}
-          >
-            <User className="h-4 w-4 mr-2" />
-            Войти
-          </Button>
+          {/* Show Messages button for landlords */}
+          {user && user.role === 'landlord' && (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="hidden md:flex hover:scale-105 transition-spring"
+              onClick={() => setIsMessagesOpen(true)}
+            >
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Сообщения
+            </Button>
+          )}
           
-          <Button 
-            variant="default" 
-            size="sm" 
-            className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring"
-            onClick={() => setIsCreateListingOpen(true)}
-          >
-            Разместить объявление
-          </Button>
+          {loading ? null : user ? (
+            <div className="animate-in fade-in-0 duration-200">
+              <ProfileWidget />
+            </div>
+          ) : (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="hover:scale-105 transition-spring hover:shadow-subtle"
+              onClick={() => setIsAuthFormOpen(true)}
+            >
+              <User className="h-4 w-4 mr-2" />
+              Войти
+            </Button>
+          )}
+          
+          {/* Show "Разместить объявление" only for landlords */}
+          {user && user.role === 'landlord' && (
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring"
+              onClick={() => setIsCreateListingOpen(true)}
+            >
+              Разместить объявление
+            </Button>
+          )}
 
           <Button variant="ghost" size="sm" className="md:hidden hover:scale-105 transition-spring">
             <Menu className="h-4 w-4" />
@@ -80,8 +114,13 @@ const Header = () => {
         isOpen={isCreateListingOpen} 
         onClose={() => setIsCreateListingOpen(false)} 
       />
+      
+      <MessagesModal 
+        isOpen={isMessagesOpen} 
+        onClose={() => setIsMessagesOpen(false)} 
+      />
     </>
-  );
+  );  
 };
 
 export default Header;

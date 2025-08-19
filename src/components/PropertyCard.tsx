@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MapPin, Bed, Bath, Square } from "lucide-react";
+import { Heart, MapPin, Bed, Bath, Square, Home } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface PropertyCardProps {
   id: string;
@@ -16,6 +18,7 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ 
+  id,
   title, 
   price, 
   address, 
@@ -26,15 +29,60 @@ const PropertyCard = ({
   isNew = false,
   isFavorite = false 
 }: PropertyCardProps) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleImageError = () => {
+    console.log("Image failed to load:", imageUrl);
+    setImageError(true);
+    setImageLoading(false);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleDetailsClick = () => {
+    navigate(`/listing/${id}`);
+  };
+
   return (
     <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-elegant transition-spring cursor-pointer border border-border/50 hover:scale-105 animate-fade-in">
       {/* Image */}
       <div className="relative overflow-hidden">
-        <img 
-          src={imageUrl} 
-          alt={title}
-          className="w-full h-48 object-cover group-hover:scale-110 transition-spring duration-500"
-        />
+        {!imageError && imageUrl ? (
+          <>
+            {imageLoading && (
+              <div className="w-full h-48 bg-muted flex items-center justify-center">
+                <div className="text-center text-muted-foreground">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+                  <p className="text-sm">Загрузка...</p>
+                </div>
+              </div>
+            )}
+            <img 
+              src={imageUrl} 
+              alt={title}
+              className={`w-full h-48 object-cover group-hover:scale-110 transition-spring duration-500 ${
+                imageLoading ? 'hidden' : ''
+              }`}
+              onError={handleImageError}
+              onLoad={handleImageLoad}
+            />
+          </>
+        ) : (
+          <div className="w-full h-48 bg-muted flex items-center justify-center">
+            <div className="text-center text-muted-foreground">
+              <Home className="h-12 w-12 mx-auto mb-2 opacity-50" />
+              <p className="text-sm">Фото</p>
+              {imageUrl && (
+                <p className="text-xs mt-1 opacity-75">URL: {imageUrl}</p>
+              )}
+            </div>
+          </div>
+        )}
         
         {/* Badges */}
         <div className="absolute top-3 left-3 flex gap-2">
@@ -95,7 +143,12 @@ const PropertyCard = ({
             <span className="text-muted-foreground text-sm">/месяц</span>
           </div>
           
-          <Button variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-spring">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-spring"
+            onClick={handleDetailsClick}
+          >
             Подробнее
           </Button>
         </div>

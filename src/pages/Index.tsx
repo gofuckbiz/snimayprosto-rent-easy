@@ -1,21 +1,21 @@
-import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import FilterBar from "@/components/FilterBar";
-import PropertyGrid from "@/components/PropertyGrid";
 import FeaturesSection from "@/components/FeaturesSection";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AuthTest from "@/components/AuthTest";
 
-const Index = () => {
+const IndexPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <HeroSection />
-      <FilterBar />
-      <PropertyGrid />
       <FeaturesSection />
+      <div className="container mx-auto px-4 py-8">
+        <AuthTest />
+      </div>
       <Footer />
     </div>
   );
 };
 
-export default Index;
+export default IndexPage;
