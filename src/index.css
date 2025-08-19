@@ -15,10 +15,10 @@
     --popover-foreground: 224 71% 4%;
     
     /* Primary palette - sophisticated blue with energy */
-    --primary: 217 91% 60%;
+    --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
-    --primary-hover: 217 91% 55%;
-    --primary-light: 217 91% 95%;
+    --primary-hover: 0 0% 15%;
+    --primary-light: 0 0% 95%;
     
     /* Secondary and accent colors */
     --secondary: 220 14% 96%;
@@ -39,13 +39,13 @@
     /* Borders and inputs */
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --ring: 0 0% 9%;
     
     /* Design system variables */
     --radius: 0.5rem;
     
     /* Custom gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 70%));
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 9%), hsl(0 0% 20%));
     --gradient-hero: linear-gradient(135deg, hsl(224 71% 4%) 0%, hsl(217 91% 60%) 100%);
     --gradient-elegant: linear-gradient(135deg, hsl(220 14% 96%) 0%, hsl(0 0% 100%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
@@ -54,7 +54,7 @@
     --shadow-elegant: 0 25px 50px -12px hsl(224 71% 4% / 0.25);
     --shadow-card: 0 4px 6px -1px hsl(224 71% 4% / 0.1), 0 2px 4px -2px hsl(224 71% 4% / 0.1);
     --shadow-subtle: 0 1px 3px 0 hsl(224 71% 4% / 0.1), 0 1px 2px -1px hsl(224 71% 4% / 0.1);
-    --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.3);
+    --shadow-glow: 0 0 20px hsl(0 0% 9% / 0.3);
     
     /* Transitions */
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -72,8 +72,8 @@
     --card-foreground: 0 0% 98%;
     --popover: 224 71% 4%;
     --popover-foreground: 0 0% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 224 71% 4%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
     --secondary: 215 28% 17%;
     --secondary-foreground: 0 0% 98%;
     --muted: 215 28% 17%;
@@ -84,10 +84,11 @@
     --destructive-foreground: 0 0% 98%;
     --border: 215 28% 17%;
     --input: 215 28% 17%;
-    --ring: 217 91% 60%;
+    --ring: 0 0% 9%;
     
     /* Dark mode gradients */
     --gradient-hero: linear-gradient(135deg, hsl(224 71% 4%) 0%, hsl(217 91% 20%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 15%), hsl(0 0% 25%));
     --gradient-elegant: linear-gradient(135deg, hsl(215 28% 17%) 0%, hsl(224 71% 4%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(224 71% 4%) 0%, hsl(215 28% 17%) 100%);
   }
@@ -289,7 +290,7 @@
 }
 
 .shadow-glow {
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 0 20px hsl(0 0% 9% / 0.3);
 }
 
 /* Hover effects */
