@@ -240,7 +240,7 @@ const PlanUpgradeModal = ({
                 <Button
                   onClick={handleUpgrade}
                   disabled={isLoading}
-                  className="bg-gradient-primary hover:shadow-elegant flex-1"
+                  className="bg-black hover:bg-black/90 text-white hover:shadow-elegant flex-1"
                   size="lg"
                 >
                   <CreditCard className="h-4 w-4 mr-2" />
