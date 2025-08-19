@@ -9,6 +9,7 @@ import HowItWorksPage from "@/pages/HowItWorks";
 import NotFoundPage from "@/pages/NotFound";
 import MyListingsPage from "@/components/MyListingsPage";
 import PricingPage from "@/pages/Pricing";
+import FeedbackWidget from "@/components/FeedbackWidget";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ function App() {
           </Routes>
         </Router>
         <Toaster />
+        <FeedbackWidget />
       </AuthProvider>
     </QueryClientProvider>
   );

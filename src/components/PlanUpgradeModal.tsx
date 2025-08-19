@@ -205,7 +205,7 @@ const PlanUpgradeModal = ({
                       className={`w-full mt-6 ${
                         selectedPlan === plan.id 
                           ? 'bg-black hover:bg-black/90 text-white hover:shadow-elegant' 
-                          : 'bg-muted hover:bg-muted/80'
+                          : 'bg-black hover:bg-black/90 text-white'
                       } transition-all duration-300`}
                       onClick={(e) => {
                         e.stopPropagation();
