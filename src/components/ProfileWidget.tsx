@@ -93,8 +93,14 @@ const ProfileWidget = () => {
         <Avatar className="h-6 w-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {user.avatarUrl ? (
-            <img src={user.avatarUrl} alt="avatar" className="h-full w-full rounded-full" />
-          ) : (
+            <div className="p-3 bg-gray-100 text-gray-700 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <Star className="h-3 w-3" />
+                <span className="font-semibold text-sm">Базовый</span>
+              </div>
+              <div className="text-xs mt-1 opacity-80">
+                0 из 3 объявлений
+              </div>
             <AvatarFallback>{initials}</AvatarFallback>
           )}
         </Avatar>
