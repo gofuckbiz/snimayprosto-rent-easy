@@ -55,27 +55,6 @@ const FeaturesSection = () => {
                   <Icon className="h-10 w-10 text-primary-foreground" />
                   <div className="absolute inset-0 bg-white/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-spring"></div>
                   
-                  {/* Interactive widget for each feature */}
-                  {index === 0 && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
-                  )}
-                  {index === 1 && (
-                    <div className="absolute -top-1 -right-1 text-xs bg-blue-500 text-white px-2 py-1 rounded-full font-bold animate-bounce">
-                      2мин
-                    </div>
-                  )}
-                  {index === 2 && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
-                    </div>
-                  )}
-                  {index === 3 && (
-                    <div className="absolute -top-1 -right-1 text-xs bg-purple-500 text-white px-2 py-1 rounded-full font-bold">
-                      100%
-                    </div>
-                  )}
                 </div>
                 
                 <h3 className="text-xl md:text-2xl font-bold mb-4 group-hover:text-primary transition-spring">{feature.title}</h3>
@@ -83,8 +62,8 @@ const FeaturesSection = () => {
                 
                 {/* Feature-specific widgets */}
                 {index === 0 && (
-                  <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
-                    <div className="flex items-center justify-center space-x-2 text-green-700">
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 mt-4">
+                    <div className="flex items-center justify-center space-x-2 text-green-600">
                       <Shield className="h-4 w-4" />
                       <span className="text-sm font-medium">Проверено модераторами</span>
                     </div>
@@ -92,31 +71,45 @@ const FeaturesSection = () => {
                 )}
                 
                 {index === 1 && (
-                  <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-600 mb-1">⚡</div>
-                      <div className="text-xs text-blue-700 font-medium">Средний поиск: 2 минуты</div>
+                  <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-4 mt-4">
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <Clock className="h-4 w-4 text-blue-600" />
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-blue-600">2 мин</div>
+                        <div className="text-xs text-blue-700">Средний поиск</div>
+                      </div>
                     </div>
                   </div>
                 )}
                 
                 {index === 2 && (
-                  <div className="bg-gradient-to-r from-orange-500/10 to-amber-500/10 border border-orange-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
-                    <div className="flex items-center justify-between text-orange-700">
-                      <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span className="text-xs">Онлайн</span>
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-xl p-4 mt-4">
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="p-2 bg-orange-100 rounded-lg">
+                        <MessageSquare className="h-4 w-4 text-orange-600" />
                       </div>
-                      <MessageSquare className="h-4 w-4" />
+                      <div className="text-center">
+                        <div className="flex items-center space-x-1">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="text-sm font-medium text-orange-700">Онлайн</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
                 
                 {index === 3 && (
-                  <div className="bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-purple-600 mb-1">🔒</div>
-                      <div className="text-xs text-purple-700 font-medium">SSL шифрование</div>
+                  <div className="bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-200 rounded-xl p-4 mt-4">
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="p-2 bg-purple-100 rounded-lg">
+                        <CreditCard className="h-4 w-4 text-purple-600" />
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-purple-600">100%</div>
+                        <div className="text-xs text-purple-700">Безопасно</div>
+                      </div>
                     </div>
                   </div>
                 )}
