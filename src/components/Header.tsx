@@ -30,36 +30,51 @@ const Header = () => {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/properties" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
+            <Link 
+              to="/properties" 
+              className="text-foreground/80 hover:text-primary transition-all duration-300 relative group font-medium"
+            >
               <span className="relative">
                 Квартиры
-                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-all duration-500 origin-left rounded-full"></span>
               </span>
             </Link>
             {user && user.role === 'landlord' && (
-              <Link to="/my-listings" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
+              <Link 
+                to="/my-listings" 
+                className="text-foreground/80 hover:text-primary transition-all duration-300 relative group font-medium"
+              >
                 <span className="relative">
                   Мои объявления
-                  <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
+                  <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-all duration-500 origin-left rounded-full"></span>
                 </span>
               </Link>
             )}
-            <Link to="/rooms" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
+            <Link 
+              to="/rooms" 
+              className="text-foreground/80 hover:text-primary transition-all duration-300 relative group font-medium"
+            >
               <span className="relative">
                 Комнаты
-                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-all duration-500 origin-left rounded-full"></span>
               </span>
             </Link>
-            <Link to="/how-it-works" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
+            <Link 
+              to="/how-it-works" 
+              className="text-foreground/80 hover:text-primary transition-all duration-300 relative group font-medium"
+            >
               <span className="relative">
                 Как это работает
-                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-all duration-500 origin-left rounded-full"></span>
               </span>
             </Link>
-            <Link to="/pricing" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
+            <Link 
+              to="/pricing" 
+              className="text-foreground/80 hover:text-primary transition-all duration-300 relative group font-medium"
+            >
               <span className="relative">
                 Тарифы
-                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-all duration-500 origin-left rounded-full"></span>
               </span>
             </Link>
           </nav>
