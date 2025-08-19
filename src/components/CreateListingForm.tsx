@@ -224,6 +224,17 @@ const CreateListingForm = ({ isOpen, onClose }: CreateListingFormProps) => {
       toast({ title: "Объявление создано", description: "Ваше объявление опубликовано с фотографиями." });
       onClose();
     } catch (err: any) {
+      if (err?.status === 403 && err?.data?.error === 'listing_limit_exceeded') {
+        toast({ 
+          title: "Лимит объявлений исчерпан", 
+          description: `У вас уже ${err.data.activeListings} из ${err.data.maxListings} объявлений. Обновите план для создания новых.`,
+          variant: "destructive" 
+        });
+        // Show upgrade modal
+        onClose();
+        // This would need to be passed as a prop or handled via context
+        return;
+      }
       const message = err?.status === 401 ? "Требуется вход" : (err?.message || "Не удалось создать объявление");
       toast({ title: "Ошибка", description: message, variant: "destructive" });
     } finally {

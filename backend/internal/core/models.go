@@ -71,4 +71,24 @@ type Message struct {
 	ReadAt         *time.Time `json:"readAt"`
 }
 
+// UserPlan represents a user's subscription plan
+type UserPlan struct {
+	ID          uint      `gorm:"primaryKey" json:"id"`
+	UserID      uint      `gorm:"uniqueIndex;not null" json:"userId"`
+	PlanType    string    `gorm:"type:varchar(20);default:free" json:"planType"` // free, premium, unlimited
+	MaxListings int       `gorm:"default:3" json:"maxListings"`
+	ExpiresAt   *time.Time `json:"expiresAt"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
+}
+
+// PropertyPromotion represents a promoted listing
+type PropertyPromotion struct {
+	ID         uint      `gorm:"primaryKey" json:"id"`
+	PropertyID uint      `gorm:"uniqueIndex;not null" json:"propertyId"`
+	UserID     uint      `gorm:"index;not null" json:"userId"`
+	ExpiresAt  time.Time `gorm:"not null" json:"expiresAt"`
+	CreatedAt  time.Time `json:"createdAt"`
+}
+
 

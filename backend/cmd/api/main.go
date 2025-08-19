@@ -42,7 +42,7 @@ func main() {
 	}
 
 	// миграции
-	if err := db.AutoMigrate(&core.User{}, &core.Property{}, &core.PropertyImage{}, &core.Favorite{}, &core.Conversation{}, &core.Message{}); err != nil {
+	if err := db.AutoMigrate(&core.User{}, &core.Property{}, &core.PropertyImage{}, &core.Favorite{}, &core.Conversation{}, &core.Message{}, &core.UserPlan{}, &core.PropertyPromotion{}); err != nil {
 		log.Fatalf("migrate: %v", err)
 	}
 
@@ -71,6 +71,13 @@ func main() {
 	r.GET("/properties", props.List)
 	r.GET("/properties/:id", props.Get)
 	r.POST("/properties/:id/images", handlers.AuthMiddleware(cfg), props.UploadImages)
+	r.GET("/properties/my", handlers.AuthMiddleware(cfg), props.MyListings)
+	r.POST("/properties/:id/promote", handlers.AuthMiddleware(cfg), props.PromoteProperty)
+
+	// plans
+	plans := handlers.NewPlansHandler(db, cfg)
+	r.GET("/plans/my", handlers.AuthMiddleware(cfg), plans.GetMyPlan)
+	r.POST("/plans/upgrade", handlers.AuthMiddleware(cfg), plans.UpgradePlan)
 
 	// chat
 	chat := handlers.NewChatHandler(db, cfg)

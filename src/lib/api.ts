@@ -287,4 +287,47 @@ export async function listConversations(): Promise<{ conversations: Conversation
   });
 }
 
+export interface UserPlan {
+  id: number;
+  userId: number;
+  planType: string;
+  maxListings: number;
+  expiresAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MyPlanResponse {
+  plan: UserPlan;
+  activeListings: number;
+  canCreateMore: boolean;
+}
+
+export async function getMyPlan(): Promise<MyPlanResponse> {
+  return request('/plans/my', {
+    headers: { ...authHeaders() },
+  });
+}
+
+export async function upgradePlan(planType: 'premium' | 'unlimited') {
+  return request('/plans/upgrade', {
+    method: 'POST',
+    headers: { ...authHeaders() },
+    body: JSON.stringify({ planType }),
+  });
+}
+
+export async function getMyListings() {
+  return request('/properties/my', {
+    headers: { ...authHeaders() },
+  });
+}
+
+export async function promoteProperty(propertyId: number) {
+  return request(`/properties/${propertyId}/promote`, {
+    method: 'POST',
+    headers: { ...authHeaders() },
+  });
+}
+
 

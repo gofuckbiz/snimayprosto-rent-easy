@@ -65,6 +65,44 @@ func (h *PropertiesHandler) Create(c *gin.Context) {
 		return
 	}
 
+	// Check user's plan and listing limit
+	var plan core.UserPlan
+	if err := h.DB.Where("user_id = ?", userIDUint).First(&plan).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			// Create default free plan
+			plan = core.UserPlan{
+				UserID:      userIDUint,
+				PlanType:    "free",
+				MaxListings: 3,
+			}
+			if err := h.DB.Create(&plan).Error; err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "create_plan_failed"})
+				return
+			}
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "plan_lookup_failed"})
+			return
+		}
+	}
+
+	// Count current active listings
+	var activeListings int64
+	if err := h.DB.Model(&core.Property{}).Where("owner_id = ?", userIDUint).Count(&activeListings).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "count_listings_failed"})
+		return
+	}
+
+	// Check if user can create more listings
+	if activeListings >= int64(plan.MaxListings) {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error":          "listing_limit_exceeded",
+			"currentPlan":    plan.PlanType,
+			"maxListings":    plan.MaxListings,
+			"activeListings": activeListings,
+		})
+		return
+	}
+
 	var req createPropertyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid_request"})
@@ -105,7 +143,13 @@ func (h *PropertiesHandler) Create(c *gin.Context) {
 func (h *PropertiesHandler) List(c *gin.Context) {
 	city := strings.TrimSpace(c.Query("city"))
 	var items []core.Property
-	q := h.DB.Preload("Images").Order("created_at desc")
+	
+	// First get promoted properties, then regular ones
+	q := h.DB.Preload("Images").
+		Select("properties.*, CASE WHEN property_promotions.id IS NOT NULL AND property_promotions.expires_at > NOW() THEN 1 ELSE 0 END as is_promoted").
+		Joins("LEFT JOIN property_promotions ON properties.id = property_promotions.property_id AND property_promotions.expires_at > NOW()").
+		Order("is_promoted DESC, created_at DESC")
+	
 	if city != "" {
 		like := "%" + city + "%"
 		q = q.Where("city ILIKE ? OR address ILIKE ?", like, like)
@@ -114,6 +158,15 @@ func (h *PropertiesHandler) List(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "db_error"})
 		return
 	}
+	
+	// Add promotion status to each property
+	for i := range items {
+		var promotion core.PropertyPromotion
+		if err := h.DB.Where("property_id = ? AND expires_at > NOW()", items[i].ID).First(&promotion).Error; err == nil {
+			// Property is promoted - this will be handled in frontend
+		}
+	}
+	
 	c.JSON(http.StatusOK, gin.H{"items": items})
 }
 
@@ -227,6 +280,118 @@ func (h *PropertiesHandler) UploadImages(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"images": uploadedImages})
+}
+
+func (h *PropertiesHandler) MyListings(c *gin.Context) {
+	userIDVal, exists := c.Get("userId")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "user_not_found"})
+		return
+	}
+
+	var userID uint
+	switch v := userIDVal.(type) {
+	case float64:
+		userID = uint(v)
+	case uint:
+		userID = v
+	case int:
+		userID = uint(v)
+	default:
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "invalid_user_id_type"})
+		return
+	}
+
+	var properties []core.Property
+	if err := h.DB.Preload("Images").Where("owner_id = ?", userID).Order("created_at DESC").Find(&properties).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "fetch_failed"})
+		return
+	}
+
+	// Add promotion status
+	type PropertyWithPromotion struct {
+		core.Property
+		IsPromoted bool      `json:"isPromoted"`
+		ExpiresAt  *time.Time `json:"promotionExpiresAt,omitempty"`
+	}
+
+	var result []PropertyWithPromotion
+	for _, prop := range properties {
+		var promotion core.PropertyPromotion
+		isPromoted := false
+		var expiresAt *time.Time
+		
+		if err := h.DB.Where("property_id = ? AND expires_at > NOW()", prop.ID).First(&promotion).Error; err == nil {
+			isPromoted = true
+			expiresAt = &promotion.ExpiresAt
+		}
+
+		result = append(result, PropertyWithPromotion{
+			Property:   prop,
+			IsPromoted: isPromoted,
+			ExpiresAt:  expiresAt,
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"items": result})
+}
+
+func (h *PropertiesHandler) PromoteProperty(c *gin.Context) {
+	userIDVal, exists := c.Get("userId")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "user_not_found"})
+		return
+	}
+
+	var userID uint
+	switch v := userIDVal.(type) {
+	case float64:
+		userID = uint(v)
+	case uint:
+		userID = v
+	case int:
+		userID = uint(v)
+	default:
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "invalid_user_id_type"})
+		return
+	}
+
+	propertyID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid_property_id"})
+		return
+	}
+
+	// Verify property ownership
+	var property core.Property
+	if err := h.DB.Where("id = ? AND owner_id = ?", propertyID, userID).First(&property).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "property_not_found_or_not_owned"})
+		return
+	}
+
+	// Check if already promoted
+	var existingPromotion core.PropertyPromotion
+	if err := h.DB.Where("property_id = ? AND expires_at > NOW()", propertyID).First(&existingPromotion).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "already_promoted"})
+		return
+	}
+
+	// Create promotion (7 days)
+	promotion := core.PropertyPromotion{
+		PropertyID: uint(propertyID),
+		UserID:     userID,
+		ExpiresAt:  time.Now().AddDate(0, 0, 7), // 7 days
+	}
+
+	if err := h.DB.Create(&promotion).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "promotion_failed"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":   "property_promoted",
+		"expiresAt": promotion.ExpiresAt,
+	})
 }
 
 

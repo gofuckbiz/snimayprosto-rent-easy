@@ -14,6 +14,7 @@ type Item = {
   rooms: number;
   area?: number;
   images?: Array<{ url: string; order: number }>;
+  isPromoted?: boolean;
 };
 
 const PropertiesPage = () => {
@@ -77,6 +78,7 @@ const PropertiesPage = () => {
                 bathrooms={1}
                 area={p.area || 0}
                 imageUrl={getImageUrl(p)}
+                isPromoted={p.isPromoted}
               />
             ))}
           </div>

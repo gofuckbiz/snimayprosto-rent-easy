@@ -15,6 +15,7 @@ interface PropertyCardProps {
   imageUrl: string;
   isNew?: boolean;
   isFavorite?: boolean;
+  isPromoted?: boolean;
 }
 
 const PropertyCard = ({ 
@@ -27,7 +28,8 @@ const PropertyCard = ({
   area, 
   imageUrl,
   isNew = false,
-  isFavorite = false 
+  isFavorite = false,
+  isPromoted = false
 }: PropertyCardProps) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
@@ -49,7 +51,11 @@ const PropertyCard = ({
   };
 
   return (
-    <div className="group bg-gradient-card rounded-2xl overflow-hidden shadow-card hover:shadow-elegant transition-spring cursor-pointer border border-border/30 hover:scale-105 animate-fade-in hover-lift">
+    <div className={`group rounded-2xl overflow-hidden shadow-card hover:shadow-elegant transition-spring cursor-pointer border hover:scale-105 animate-fade-in hover-lift ${
+      isPromoted 
+        ? 'bg-gradient-to-br from-orange-50 to-red-50 border-orange-200 shadow-lg' 
+        : 'bg-gradient-card border-border/30'
+    }`}>
       {/* Image */}
       <div className="relative overflow-hidden">
         {!imageError && imageUrl ? (
@@ -86,6 +92,11 @@ const PropertyCard = ({
         
         {/* Badges */}
         <div className="absolute top-4 left-4 flex gap-2">
+          {isPromoted && (
+            <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold shadow-lg backdrop-blur-sm animate-pulse-glow">
+              🔥 Топ
+            </Badge>
+          )}
           {isNew && (
             <Badge className="bg-gradient-primary text-primary-foreground font-semibold shadow-lg backdrop-blur-sm">
               Новое
