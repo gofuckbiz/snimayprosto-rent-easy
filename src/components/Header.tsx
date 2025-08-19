@@ -56,6 +56,12 @@ const Header = () => {
                 <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
               </span>
             </Link>
+            <Link to="/pricing" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
+              <span className="relative">
+                Тарифы
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
+              </span>
+            </Link>
           </nav>
         </div>
 

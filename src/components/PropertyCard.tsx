@@ -16,6 +16,7 @@ interface PropertyCardProps {
   isNew?: boolean;
   isFavorite?: boolean;
   isPromoted?: boolean;
+  onPromote?: () => void;
 }
 
 const PropertyCard = ({ 

@@ -8,6 +8,7 @@ import PropertyDetailPage from "@/pages/PropertyDetail";
 import HowItWorksPage from "@/pages/HowItWorks";
 import NotFoundPage from "@/pages/NotFound";
 import MyListingsPage from "@/components/MyListingsPage";
+import PricingPage from "@/pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/listing/:id" element={<PropertyDetailPage />} />
             <Route path="/how-it-works" element={<HowItWorksPage />} />
             <Route path="/my-listings" element={<MyListingsPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Router>
