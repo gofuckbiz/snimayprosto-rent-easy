@@ -204,7 +204,7 @@ const PlanUpgradeModal = ({
                     <Button
                       className={`w-full mt-6 ${
                         selectedPlan === plan.id 
-                          ? 'bg-gradient-primary hover:shadow-elegant' 
+                          ? 'bg-black hover:bg-black/90 text-white hover:shadow-elegant' 
                           : 'bg-muted hover:bg-muted/80'
                       } transition-all duration-300`}
                       onClick={(e) => {
