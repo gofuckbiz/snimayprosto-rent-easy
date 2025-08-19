@@ -85,7 +85,7 @@ const FeedbackWidget = () => {
             }`}
             size="sm"
           >
-            <MessageSquare className="h-6 w-6 text-primary-foreground" />
+            <MessageSquare className="h-6 w-6 text-white" />
           </Button>
 
           {/* Tooltip */}
@@ -97,11 +97,11 @@ const FeedbackWidget = () => {
 
           {/* Expanded Menu */}
           {isOpen && (
-            <div className="absolute bottom-16 left-0 bg-background border border-border rounded-xl shadow-elegant p-3 min-w-[200px] animate-scale-in">
+            <div className="absolute bottom-16 left-0 bg-white border border-gray-200 rounded-xl shadow-2xl p-3 min-w-[200px] animate-scale-in">
               <div className="space-y-2">
                 <Button
                   variant="ghost"
-                  className="w-full justify-start text-left hover:bg-primary/10"
+                  className="w-full justify-start text-left hover:bg-gray-100 text-gray-700"
                   onClick={() => {
                     setIsModalOpen(true);
                     setFeedbackType("review");
@@ -113,7 +113,7 @@ const FeedbackWidget = () => {
                 
                 <Button
                   variant="ghost"
-                  className="w-full justify-start text-left hover:bg-primary/10"
+                  className="w-full justify-start text-left hover:bg-gray-100 text-gray-700"
                   onClick={() => {
                     setIsModalOpen(true);
                     setFeedbackType("suggestion");
@@ -125,7 +125,7 @@ const FeedbackWidget = () => {
                 
                 <Button
                   variant="ghost"
-                  className="w-full justify-start text-left hover:bg-primary/10"
+                  className="w-full justify-start text-left hover:bg-gray-100 text-gray-700"
                   onClick={() => {
                     setIsModalOpen(true);
                     setFeedbackType("bug");
@@ -155,7 +155,7 @@ const FeedbackWidget = () => {
               </Button>
               
               <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow">
-                <MessageSquare className="h-8 w-8 text-primary-foreground" />
+                <MessageSquare className="h-8 w-8 text-white" />
               </div>
               
               <CardTitle className="text-2xl font-bold">
@@ -238,11 +238,11 @@ const FeedbackWidget = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting || !feedback.trim()}
-                  className="w-full h-12 bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring rounded-xl font-semibold"
+                  className="w-full h-12 bg-black hover:bg-black/90 text-white hover:shadow-elegant hover:scale-105 transition-spring rounded-xl font-semibold"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-2"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                       Отправляем...
                     </>
                   ) : (
