@@ -83,7 +83,7 @@ const FeaturesSection = () => {
                 
                 {/* Feature-specific widgets */}
                 {index === 0 && (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 mt-4">
+                  <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
                     <div className="flex items-center justify-center space-x-2 text-green-700">
                       <Shield className="h-4 w-4" />
                       <span className="text-sm font-medium">Проверено модераторами</span>
@@ -92,7 +92,7 @@ const FeaturesSection = () => {
                 )}
                 
                 {index === 1 && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-4">
+                  <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-blue-600 mb-1">⚡</div>
                       <div className="text-xs text-blue-700 font-medium">Средний поиск: 2 минуты</div>
@@ -101,7 +101,7 @@ const FeaturesSection = () => {
                 )}
                 
                 {index === 2 && (
-                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mt-4">
+                  <div className="bg-gradient-to-r from-orange-500/10 to-amber-500/10 border border-orange-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
                     <div className="flex items-center justify-between text-orange-700">
                       <div className="flex items-center space-x-1">
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -113,7 +113,7 @@ const FeaturesSection = () => {
                 )}
                 
                 {index === 3 && (
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 mt-4">
+                  <div className="bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-500/20 rounded-xl p-4 mt-4 backdrop-blur-sm">
                     <div className="text-center">
                       <div className="text-lg font-bold text-purple-600 mb-1">🔒</div>
                       <div className="text-xs text-purple-700 font-medium">SSL шифрование</div>
