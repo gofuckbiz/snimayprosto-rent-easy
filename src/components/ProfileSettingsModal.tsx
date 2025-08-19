@@ -190,6 +190,15 @@ const ProfileSettingsModal = ({ isOpen, onClose }: ProfileSettingsModalProps) =>
                 <Upload className="h-4 w-4 mr-2" />
                 Загрузить фото
               </Button>
+              
+              <Button
+                variant="ghost"
+                onClick={() => fileInputRef.current?.click()}
+                className="hover:scale-105 transition-spring text-primary hover:text-primary"
+              >
+                <Camera className="h-4 w-4 mr-2" />
+                Выбрать фото
+              </Button>
             </div>
           </div>
 
