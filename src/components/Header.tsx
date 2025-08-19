@@ -22,37 +22,37 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-background/95 backdrop-blur-md border-b border-border sticky top-0 z-50 animate-fade-in">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="bg-background/80 backdrop-blur-xl border-b border-border/50 sticky top-0 z-50 animate-slide-down shadow-subtle">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <div className="flex items-center space-x-8">
-          <div className="text-2xl font-bold text-foreground hover:scale-105 transition-spring cursor-pointer">
+          <Link to="/" className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent hover:scale-105 transition-spring cursor-pointer">
             СнятьПросто
-          </div>
+          </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/properties" className="text-foreground hover:text-primary transition-spring relative group">
+            <Link to="/properties" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
               <span className="relative">
                 Квартиры
-                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
               </span>
             </Link>
-            <a href="#" className="text-foreground hover:text-primary transition-spring relative group">
+            <a href="#" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
               <span className="relative">
                 Комнаты
-                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
               </span>
             </a>
-            <Link to="/how-it-works" className="text-foreground hover:text-primary transition-spring relative group">
+            <Link to="/how-it-works" className="text-foreground/80 hover:text-primary transition-spring relative group font-medium">
               <span className="relative">
                 Как это работает
-                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                <span className="absolute inset-x-0 -bottom-2 h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
               </span>
             </Link>
           </nav>
         </div>
 
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" className="hidden md:flex hover:scale-105 transition-spring">
+          <Button variant="ghost" size="lg" className="hidden md:flex hover:scale-105 transition-spring hover:bg-primary/10 rounded-xl">
             <Heart className="h-4 w-4 mr-2" />
             Избранное
           </Button>
@@ -61,8 +61,8 @@ const Header = () => {
           {user && user.role === 'landlord' && (
             <Button 
               variant="ghost" 
-              size="sm" 
-              className="hidden md:flex hover:scale-105 transition-spring"
+              size="lg" 
+              className="hidden md:flex hover:scale-105 transition-spring hover:bg-primary/10 rounded-xl"
               onClick={() => setIsMessagesOpen(true)}
             >
               <MessageCircle className="h-4 w-4 mr-2" />
@@ -77,8 +77,8 @@ const Header = () => {
           ) : (
             <Button 
               variant="outline" 
-              size="sm" 
-              className="hover:scale-105 transition-spring hover:shadow-subtle"
+              size="lg" 
+              className="hover:scale-105 transition-spring hover:shadow-subtle rounded-xl border-2"
               onClick={() => setIsAuthFormOpen(true)}
             >
               <User className="h-4 w-4 mr-2" />
@@ -90,15 +90,15 @@ const Header = () => {
           {user && user.role === 'landlord' && (
             <Button 
               variant="default" 
-              size="sm" 
-              className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring"
+              size="lg" 
+              className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring rounded-xl font-semibold"
               onClick={() => setIsCreateListingOpen(true)}
             >
               Разместить объявление
             </Button>
           )}
 
-          <Button variant="ghost" size="sm" className="md:hidden hover:scale-105 transition-spring">
+          <Button variant="ghost" size="lg" className="md:hidden hover:scale-105 transition-spring rounded-xl">
             <Menu className="h-4 w-4" />
           </Button>
         </div>

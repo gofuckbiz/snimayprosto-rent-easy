@@ -33,13 +33,13 @@ const FilterBar = () => {
   };
 
   return (
-    <div className="bg-background/95 backdrop-blur-md border-b border-border sticky top-16 z-40 py-4 animate-fade-in">
+    <div className="bg-background/90 backdrop-blur-xl border-b border-border/50 sticky top-20 z-40 py-6 animate-slide-down shadow-subtle">
       <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           {/* Filters */}
-          <div className="flex flex-wrap gap-3 items-center">
+          <div className="flex flex-wrap gap-4 items-center">
             <Select value={currentCity || "all"} onValueChange={handleCityChange}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[200px] h-12 rounded-xl border-2 hover:border-primary/50 transition-spring">
                 <SelectValue placeholder="Город" />
               </SelectTrigger>
               <SelectContent>
@@ -53,7 +53,7 @@ const FilterBar = () => {
             </Select>
 
             <Select>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[200px] h-12 rounded-xl border-2 hover:border-primary/50 transition-spring">
                 <SelectValue placeholder="Тип жилья" />
               </SelectTrigger>
               <SelectContent>
@@ -64,7 +64,7 @@ const FilterBar = () => {
             </Select>
 
             <Select>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[200px] h-12 rounded-xl border-2 hover:border-primary/50 transition-spring">
                 <SelectValue placeholder="Количество комнат" />
               </SelectTrigger>
               <SelectContent>
@@ -77,7 +77,7 @@ const FilterBar = () => {
             </Select>
 
             <Select>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[200px] h-12 rounded-xl border-2 hover:border-primary/50 transition-spring">
                 <SelectValue placeholder="Цена" />
               </SelectTrigger>
               <SelectContent>
@@ -88,7 +88,7 @@ const FilterBar = () => {
               </SelectContent>
             </Select>
 
-            <Button variant="outline" className="hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-spring">
+            <Button variant="outline" size="lg" className="h-12 hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-spring rounded-xl border-2 font-semibold">
               <SlidersHorizontal className="h-4 w-4 mr-2" />
               Все фильтры
             </Button>
@@ -96,7 +96,7 @@ const FilterBar = () => {
 
           {/* Sort */}
           <Select>
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="w-[220px] h-12 rounded-xl border-2 hover:border-primary/50 transition-spring">
               <SelectValue placeholder="Сортировка" />
             </SelectTrigger>
             <SelectContent>
@@ -110,28 +110,28 @@ const FilterBar = () => {
 
         {/* Active filters */}
         {activeFilters.length > 0 && (
-          <div className="flex flex-wrap gap-2 items-center mt-4">
-            <span className="text-sm text-muted-foreground">Активные фильтры:</span>
+          <div className="flex flex-wrap gap-3 items-center mt-6">
+            <span className="text-sm font-medium text-muted-foreground">Активные фильтры:</span>
             {activeFilters.map((filter, index) => (
-              <Badge key={index} variant="secondary" className="pl-3 pr-1 py-1 hover:scale-105 transition-spring">
+              <Badge key={index} variant="secondary" className="pl-4 pr-2 py-2 hover:scale-105 transition-spring rounded-full text-sm font-medium">
                 {filter}
                 {filter.startsWith("Город:") ? (
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="ml-1 h-4 w-4 p-0 hover:bg-transparent hover:scale-110 transition-spring"
+                    className="ml-2 h-5 w-5 p-0 hover:bg-transparent hover:scale-110 transition-spring rounded-full"
                     onClick={clearCityFilter}
                   >
                     <X className="h-3 w-3" />
                   </Button>
                 ) : (
-                  <Button variant="ghost" size="sm" className="ml-1 h-4 w-4 p-0 hover:bg-transparent hover:scale-110 transition-spring">
+                  <Button variant="ghost" size="sm" className="ml-2 h-5 w-5 p-0 hover:bg-transparent hover:scale-110 transition-spring rounded-full">
                     <X className="h-3 w-3" />
                   </Button>
                 )}
               </Badge>
             ))}
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground hover:scale-105 transition-spring">
+            <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-foreground hover:scale-105 transition-spring rounded-xl font-medium">
               Очистить все
             </Button>
           </div>

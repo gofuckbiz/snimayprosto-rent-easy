@@ -49,7 +49,7 @@ const PropertyCard = ({
   };
 
   return (
-    <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-elegant transition-spring cursor-pointer border border-border/50 hover:scale-105 animate-fade-in">
+    <div className="group bg-gradient-card rounded-2xl overflow-hidden shadow-card hover:shadow-elegant transition-spring cursor-pointer border border-border/30 hover:scale-105 animate-fade-in hover-lift">
       {/* Image */}
       <div className="relative overflow-hidden">
         {!imageError && imageUrl ? (
@@ -65,7 +65,7 @@ const PropertyCard = ({
             <img 
               src={imageUrl} 
               alt={title}
-              className={`w-full h-48 object-cover group-hover:scale-110 transition-spring duration-500 ${
+              className={`w-full h-52 object-cover group-hover:scale-110 transition-spring duration-700 ${
                 imageLoading ? 'hidden' : ''
               }`}
               onError={handleImageError}
@@ -73,10 +73,10 @@ const PropertyCard = ({
             />
           </>
         ) : (
-          <div className="w-full h-48 bg-muted flex items-center justify-center">
+          <div className="w-full h-52 bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
             <div className="text-center text-muted-foreground">
-              <Home className="h-12 w-12 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">Фото</p>
+              <Home className="h-16 w-16 mx-auto mb-3 opacity-40" />
+              <p className="text-sm font-medium">Фото недоступно</p>
               {imageUrl && (
                 <p className="text-xs mt-1 opacity-75">URL: {imageUrl}</p>
               )}
@@ -85,9 +85,9 @@ const PropertyCard = ({
         )}
         
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
+        <div className="absolute top-4 left-4 flex gap-2">
           {isNew && (
-            <Badge className="bg-primary text-primary-foreground font-medium">
+            <Badge className="bg-gradient-primary text-primary-foreground font-semibold shadow-lg backdrop-blur-sm">
               Новое
             </Badge>
           )}
@@ -97,56 +97,55 @@ const PropertyCard = ({
         <Button
           variant="ghost"
           size="sm"
-          className={`absolute top-3 right-3 w-8 h-8 p-0 bg-white/90 hover:bg-white hover:scale-110 transition-spring ${
+          className={`absolute top-4 right-4 w-10 h-10 p-0 bg-white/90 backdrop-blur-sm hover:bg-white hover:scale-110 transition-spring shadow-lg ${
             isFavorite ? 'text-red-500' : 'text-muted-foreground'
           }`}
         >
-          <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current animate-scale-in' : ''}`} />
+          <Heart className={`h-5 w-5 ${isFavorite ? 'fill-current animate-pulse-glow' : ''}`} />
         </Button>
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-6">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="font-semibold text-foreground group-hover:text-primary transition-spring line-clamp-2">
+          <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-spring line-clamp-2 leading-tight">
             {title}
           </h3>
         </div>
 
-        <div className="flex items-center text-muted-foreground text-sm mb-3">
-          <MapPin className="h-3 w-3 mr-1" />
+        <div className="flex items-center text-muted-foreground text-sm mb-4">
+          <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
           <span className="truncate">{address}</span>
         </div>
 
         {/* Features */}
-        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-          <div className="flex items-center gap-1">
-            <Bed className="h-3 w-3" />
-            <span>{bedrooms}</span>
+        <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
+          <div className="flex items-center gap-2">
+            <Bed className="h-4 w-4" />
+            <span className="font-medium">{bedrooms}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Bath className="h-3 w-3" />
-            <span>{bathrooms}</span>
+          <div className="flex items-center gap-2">
+            <Bath className="h-4 w-4" />
+            <span className="font-medium">{bathrooms}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Square className="h-3 w-3" />
-            <span>{area} м²</span>
+          <div className="flex items-center gap-2">
+            <Square className="h-4 w-4" />
+            <span className="font-medium">{area} м²</span>
           </div>
         </div>
 
         {/* Price */}
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-2xl font-bold text-primary">
+            <span className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               {price.toLocaleString('ru-RU')} ₽
             </span>
-            <span className="text-muted-foreground text-sm">/месяц</span>
+            <span className="text-muted-foreground text-base font-medium">/месяц</span>
           </div>
           
           <Button 
-            variant="outline" 
-            size="sm" 
-            className="hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-spring"
+            size="lg" 
+            className="bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring rounded-xl font-semibold"
             onClick={handleDetailsClick}
           >
             Подробнее

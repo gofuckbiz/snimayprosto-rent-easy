@@ -25,25 +25,38 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-elegant">
+    <section className="py-24 bg-gradient-elegant relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-primary rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-48 h-48 bg-primary rounded-full blur-3xl animate-float animation-delay-300"></div>
+      </div>
+      
       <div className="container mx-auto px-4 animate-fade-in">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Почему выбирают СнятьПросто?</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-6">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="text-sm font-semibold text-primary">Наши преимущества</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+            Почему выбирают СнятьПросто?
+          </h2>
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Мы делаем процесс аренды максимально простым и безопасным для всех участников
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <div key={index} className="text-center group animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
-                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-elegant group-hover:scale-110 transition-spring">
-                  <Icon className="h-8 w-8 text-primary-foreground" />
+              <div key={index} className="text-center group animate-fade-in hover-lift" style={{animationDelay: `${index * 0.15}s`}}>
+                <div className="relative w-20 h-20 bg-gradient-primary rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:shadow-glow group-hover:scale-110 transition-spring">
+                  <Icon className="h-10 w-10 text-primary-foreground" />
+                  <div className="absolute inset-0 bg-white/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-spring"></div>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-spring">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl md:text-2xl font-bold mb-4 group-hover:text-primary transition-spring">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-base">{feature.description}</p>
               </div>
             );
           })}
@@ -52,5 +65,7 @@ const FeaturesSection = () => {
     </section>
   );
 };
+
+import { Sparkles } from "lucide-react";
 
 export default FeaturesSection;

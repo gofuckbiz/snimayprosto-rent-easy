@@ -124,126 +124,136 @@ const AuthForm = ({ isOpen, onClose }: AuthFormProps) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">СнятьПросто</CardTitle>
-            <CardDescription>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-fade-in">
+        <Card className="w-full max-w-lg shadow-elegant border-0 animate-scale-in">
+          <CardHeader className="text-center pb-8">
+            <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow">
+              <Home className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <CardTitle className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">СнятьПросто</CardTitle>
+            <CardDescription className="text-lg text-muted-foreground mt-2">
               Войдите в аккаунт или создайте новый
             </CardDescription>
           </CardHeader>
           
-          <CardContent>
+          <CardContent className="px-8 pb-8">
             <Tabs defaultValue="login" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-2 h-12 bg-muted/50 rounded-xl">
                 <TabsTrigger value="login">Вход</TabsTrigger>
                 <TabsTrigger value="register">Регистрация</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="login" className="space-y-4">
-                <form onSubmit={handleLogin} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="login-email">Email</Label>
+              <TabsContent value="login" className="space-y-6 mt-8">
+                <form onSubmit={handleLogin} className="space-y-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="login-email" className="text-sm font-semibold">Email</Label>
                     <Input
                       id="login-email"
                       type="email"
                       placeholder="your@email.com"
                       value={loginData.email}
                       onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                      className="h-12 rounded-xl border-2 focus:border-primary transition-spring"
                       required
                     />
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="login-password">Пароль</Label>
+                  <div className="space-y-3">
+                    <Label htmlFor="login-password" className="text-sm font-semibold">Пароль</Label>
                     <Input
                       id="login-password"
                       type="password"
                       placeholder="••••••••"
                       value={loginData.password}
                       onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                      className="h-12 rounded-xl border-2 focus:border-primary transition-spring"
                       required
                     />
                   </div>
                   
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full h-12 bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring rounded-xl font-semibold text-lg" disabled={isLoading}>
                     {isLoading ? "Вход..." : "Войти"}
                   </Button>
                 </form>
               </TabsContent>
               
-              <TabsContent value="register" className="space-y-4">
-                <form onSubmit={handleRegister} className="space-y-4">
+              <TabsContent value="register" className="space-y-6 mt-8">
+                <form onSubmit={handleRegister} className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="register-firstName">Имя</Label>
+                    <div className="space-y-3">
+                      <Label htmlFor="register-firstName" className="text-sm font-semibold">Имя</Label>
                       <Input
                         id="register-firstName"
                         placeholder="Иван"
                         value={registerData.firstName}
                         onChange={(e) => setRegisterData({ ...registerData, firstName: e.target.value })}
+                        className="h-12 rounded-xl border-2 focus:border-primary transition-spring"
                         required
                       />
                     </div>
                     
-                    <div className="space-y-2">
-                      <Label htmlFor="register-lastName">Фамилия</Label>
+                    <div className="space-y-3">
+                      <Label htmlFor="register-lastName" className="text-sm font-semibold">Фамилия</Label>
                       <Input
                         id="register-lastName"
                         placeholder="Иванов"
                         value={registerData.lastName}
                         onChange={(e) => setRegisterData({ ...registerData, lastName: e.target.value })}
+                        className="h-12 rounded-xl border-2 focus:border-primary transition-spring"
                         required
                       />
                     </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="register-email">Email</Label>
+                  <div className="space-y-3">
+                    <Label htmlFor="register-email" className="text-sm font-semibold">Email</Label>
                     <Input
                       id="register-email"
                       type="email"
                       placeholder="your@email.com"
                       value={registerData.email}
                       onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
+                      className="h-12 rounded-xl border-2 focus:border-primary transition-spring"
                       required
                     />
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="register-phone">Телефон (необязательно)</Label>
+                  <div className="space-y-3">
+                    <Label htmlFor="register-phone" className="text-sm font-semibold">Телефон (необязательно)</Label>
                     <Input
                       id="register-phone"
                       type="tel"
                       placeholder="+7 (999) 123-45-67"
                       value={registerData.phone}
                       onChange={(e) => setRegisterData({ ...registerData, phone: e.target.value })}
+                      className="h-12 rounded-xl border-2 focus:border-primary transition-spring"
                     />
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="register-password">Пароль</Label>
+                  <div className="space-y-3">
+                    <Label htmlFor="register-password" className="text-sm font-semibold">Пароль</Label>
                     <Input
                       id="register-password"
                       type="password"
                       placeholder="••••••••"
                       value={registerData.password}
                       onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
+                      className="h-12 rounded-xl border-2 focus:border-primary transition-spring"
                       required
                     />
                   </div>
                   
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full h-12 bg-gradient-primary hover:shadow-elegant hover:scale-105 transition-spring rounded-xl font-semibold text-lg" disabled={isLoading}>
                     {isLoading ? "Регистрация..." : "Зарегистрироваться"}
                   </Button>
                 </form>
               </TabsContent>
             </Tabs>
             
-            <Separator className="my-4" />
+            <Separator className="my-8" />
             
             <div className="text-center">
-              <Button variant="ghost" onClick={onClose} className="text-muted-foreground">
+              <Button variant="ghost" onClick={onClose} className="text-muted-foreground hover:text-foreground transition-spring rounded-xl">
                 Закрыть
               </Button>
             </div>
