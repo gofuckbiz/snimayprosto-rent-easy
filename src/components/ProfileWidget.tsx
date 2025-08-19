@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { getMyPlan } from "@/lib/api";
+import ProfileSettingsModal from "./ProfileSettingsModal";
 import { 
   User, 
   Mail, 
@@ -21,6 +22,7 @@ import {
 const ProfileWidget = () => {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   
   const { data: planData } = useQuery({
     queryKey: ['myPlan'],
@@ -204,7 +206,10 @@ const ProfileWidget = () => {
               className="w-full justify-start" 
               variant="ghost" 
               size="sm"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                setSettingsOpen(true);
+              }}
             >
               <Settings className="h-4 w-4 mr-2" />
               Настройки профиля
@@ -230,6 +235,12 @@ const ProfileWidget = () => {
           </div>
         </div>
       )}
+
+      {/* Profile Settings Modal */}
+      <ProfileSettingsModal
+        isOpen={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+      />
     </div>
   );
 };
